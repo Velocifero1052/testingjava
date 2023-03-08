@@ -12,4 +12,13 @@ public class DemoUtil {
         }
         return null;
     }
+
+    public String getAcademyName(){
+        return "luv2code";
+    }
+
+    public Boolean isGreater(Integer a, Integer b){
+        return a > b;
+    }
+
 }
