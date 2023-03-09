@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
@@ -29,6 +31,9 @@ public class ApplicationTests {
 
     @Autowired
     CollegeStudent student;
+
+    @Autowired
+    ApplicationContext context;
 
     @Autowired
     StudentGrades studentGrades;
@@ -67,6 +72,32 @@ public class ApplicationTests {
     @Test
     void isGreaterFalse(){
         assertFalse(studentGrades.isGradeGreater(75, 90));
+    }
+
+    @Test
+    void checkNullForStudentsGrades(){
+        assertNotNull(studentGrades.checkNull(student.getStudentGrades().getMathGradeResults()));
+    }
+
+    @Test
+    void createStudentWithoutGradesInit(){
+        CollegeStudent collegeStudent = context.getBean("collegeStudent", CollegeStudent.class);
+        collegeStudent.setFirstname("Chad");
+        collegeStudent.setLastname("Lebowski");
+        collegeStudent.setEmailAddress("chad@example.com");
+        assertNotNull(collegeStudent.getFirstname());
+        assertNotNull(collegeStudent.getLastname());
+        assertNotNull(collegeStudent.getEmailAddress());
+        assertNotNull(studentGrades.checkNull(collegeStudent.getStudentGrades()));
+    }
+
+    @Test
+    void findGradesPointAverage(){
+        assertAll("Testing all assertEquals", () -> assertEquals(353.25,
+                studentGrades.addGradeResultsForSingleClass(student.getStudentGrades().getMathGradeResults())),
+                ()-> assertEquals(88.31, studentGrades.findGradePointAverage(
+                        student.getStudentGrades().getMathGradeResults()))
+        );
     }
 
 }
