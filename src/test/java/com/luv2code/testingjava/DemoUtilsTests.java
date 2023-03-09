@@ -1,24 +1,19 @@
 package com.luv2code.testingjava;
 
 import com.luv2code.testingjava.util.DemoUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.JRE;
+import org.junit.jupiter.api.condition.OS;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.time.Duration;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@TestMethodOrder(MethodOrderer.Random.class)
 class DemoUtilsTests {
 
     DemoUtil demoUtils;
@@ -66,10 +61,9 @@ class DemoUtilsTests {
 
     @Test
     void sameOrNotTheSame(){
-        String expected = "luv2code";
-        String notExpected = "dontLuv2Code";
-        assertSame(expected, demoUtils.getAcademyName());
-        assertNotSame(notExpected, demoUtils.getAcademyName());
+        String unexpectedValue = "luv2code2";
+        assertSame(demoUtils.getAcademyName(), demoUtils.getAcademyNameDuplicate());
+        assertNotSame(unexpectedValue, demoUtils.getAcademyName());
     }
 
     @Test
@@ -80,7 +74,56 @@ class DemoUtilsTests {
         assertFalse(demoUtils.isGreater(b, 1));
     }
 
+    @Test
+    void testArrayEquals(){
+        var expected = new String[]{"A", "B", "C"};
+        assertArrayEquals(expected, demoUtils.getFirstThreeLettersOfAlphabet());
+    }
 
+    @Test
+    void testIterableEquals(){
+        var expected = List.of("luv", "2", "code");
+        assertIterableEquals(expected, demoUtils.returnIterable());
+    }
+
+    @Test
+    void assertThrowsAndNotThrows(){
+        var positiveNumber = 1;
+        var negativeNumber = -1;
+        assertThrows(Exception.class, () -> {demoUtils.throwOnNegative(negativeNumber);});
+        assertDoesNotThrow(() -> {demoUtils.throwOnNegative(positiveNumber);});
+    }
+
+    @Test
+    void assertThrowsInterruptedException() {
+        assertTimeoutPreemptively(Duration.ofSeconds(3), () -> {demoUtils.checkTimeout();});
+    }
+
+    @Test
+    @Disabled("enable after issue #345 will be fixed")
+    void someDisabledTest(){
+
+    }
+
+    @Test
+    @EnabledOnOs(OS.LINUX)
+    void someServerTest(){
+
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_11)
+    void someCompatabiltyTest(){
+        
+    }
+
+    @Test
+    void testMultiply(){
+        var a = 3;
+        var b = 4;
+        var res = a * b;
+        assertEquals(res, demoUtils.multiply(a, b));
+    }
     @AfterAll()
     static void afterAllCleanup(){
         System.out.println("after all setup");
