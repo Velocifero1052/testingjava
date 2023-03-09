@@ -113,8 +113,8 @@ class DemoUtilsTests {
 
     @Test
     @EnabledOnJre(JRE.JAVA_11)
-    void someCompatabiltyTest(){
-        
+    void someCompitabiltyTest(){
+
     }
 
     @Test
