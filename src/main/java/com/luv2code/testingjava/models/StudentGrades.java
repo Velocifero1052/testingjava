@@ -5,10 +5,8 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import lombok.Data;
 
 @Component
-@Data
 public class StudentGrades {
 
     List<Double> mathGradeResults;
@@ -63,5 +61,20 @@ public class StudentGrades {
             return obj;
         }
         return null;
+    }
+
+    public List<Double> getMathGradeResults() {
+        return mathGradeResults;
+    }
+
+    public void setMathGradeResults(List<Double> mathGradeResults) {
+        this.mathGradeResults = mathGradeResults;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentGrades{" +
+                "mathGradeResults=" + mathGradeResults +
+                '}';
     }
 }

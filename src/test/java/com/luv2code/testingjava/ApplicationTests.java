@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
@@ -88,7 +87,7 @@ public class ApplicationTests {
         assertNotNull(collegeStudent.getFirstname());
         assertNotNull(collegeStudent.getLastname());
         assertNotNull(collegeStudent.getEmailAddress());
-        assertNotNull(studentGrades.checkNull(collegeStudent.getStudentGrades()));
+        assertNull(studentGrades.checkNull(collegeStudent.getStudentGrades()));
     }
 
     @Test
