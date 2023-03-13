@@ -33,12 +33,11 @@ class DemoUtilsTests {
     void testEqualsAndNotEquals() {
         System.out.println("Running test: testEqualsAndNotEquals");
         //set up
-
+        System.out.println("test contrib");
         int expected = 6;
         int unexpected = 8;
         int a = 2;
         int b = 4;
-        System.out.println("test for commit");
         //execute
         int actual = demoUtils.add(a, b);
 
